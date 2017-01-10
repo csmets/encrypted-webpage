@@ -7,5 +7,9 @@
     "build": "node ./build.js"
   },
   "author": "Clyde Smets",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "csscrypt": "^1.0.0"
+  }
 }
