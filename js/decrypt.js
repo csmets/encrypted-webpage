@@ -1,11 +1,15 @@
 // Decrypt webpage
-
-// Get keys from local storage
-var encoding = localStorage['encoding'];
-var key = localStorage['key'];
-
-
 var decrypt = function(crypted, options) {
+
+    // Get keys from local storage
+    options.encoding = (options.encoding === undefined) ?
+        localStorage['encoding'] : options.encoding;
+    options.key = (options.key === undefined) ?
+        localStorage['key'] : options.key;
+    options.pad = (options.pad === undefined) ?
+        localStorage['pad'] : options.pad;
+    options.size = (options.size === undefined) ?
+        localStorage['size'] : options.size;
 
     var cryptedChar = crypted.split('')
 
@@ -50,6 +54,16 @@ var getPadNum = function(chars, pad) {
     })
 
     return pads.length
+}
+
+// Make a string stretch out to the length given by wrapping.
+// e.g. 'ABC' make len=6  = 'ABCABC'
+const makeLength = (str, len) => {
+    if (str.length < len) {
+        return makeLength(str + str, len)
+    } else {
+        return str.substring(0,len)
+    }
 }
 
 // Resize the shift key to the length given
