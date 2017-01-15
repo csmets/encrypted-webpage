@@ -1,15 +1,13 @@
 // Decrypt webpage
-var decrypt = function(crypted, options) {
 
+var decrypt = function(crypted) {
+    
     // Get keys from local storage
-    options.encoding = (options.encoding === undefined) ?
-        localStorage['encoding'] : options.encoding;
-    options.key = (options.key === undefined) ?
-        localStorage['key'] : options.key;
-    options.pad = (options.pad === undefined) ?
-        localStorage['pad'] : options.pad;
-    options.size = (options.size === undefined) ?
-        localStorage['size'] : options.size;
+    var options = {};
+    options.encoding = localStorage.getItem('encoding') || "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    options.key = localStorage.getItem('key');
+    options.pad = localStorage.getItem('pad') || '=';
+    options.bitSize = localStorage.getItem('bitSize') || 6;
 
     var cryptedChar = crypted.split('')
 
@@ -105,7 +103,7 @@ var decode = function(message, options) {
             return options.pad
         } else {
             var bin = (deci >>> 0).toString(2)
-            var completeBin = recPrepend(options.size, bin, '0')
+            var completeBin = recPrepend(options.bitSize, bin, '0')
             return completeBin
         }
     })
